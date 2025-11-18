@@ -19,15 +19,10 @@
         sans-serif;
     }
 
-    /* Wrapper so it looks good even if the iframe is very wide */
-    .wrapper {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
+    /* NO wrapper — full width */
     .slideshow-container {
-      position: relative;
       width: 100%;
+      position: relative;
       overflow: hidden;
       background: #000;
     }
@@ -57,6 +52,7 @@
       font-weight: bold;
       font-size: 22px;
       user-select: none;
+      z-index: 10;
     }
 
     .prev {
@@ -76,6 +72,7 @@
     .dots-container {
       text-align: center;
       padding: 10px 0 16px;
+      width: 100%;
     }
 
     .dot {
@@ -122,48 +119,92 @@
 </head>
 
 <body>
-  <div class="wrapper">
-    <div class="slideshow-container">
-      <div class="mySlides fade">
+
+  <div class="slideshow-container">
+    <!-- SLIDE 1 -->
+    <div class="mySlides fade">
+      <a href="https://www.french4me.net" target="_blank" rel="noopener noreferrer">
         <img src="Slide1.JPG" alt="Slide 1" />
-      </div>
+      </a>
+    </div>
 
-      <div class="mySlides fade">
+    <!-- SLIDE 2 -->
+    <div class="mySlides fade">
+      <a href="https://www.french4me.net" target="_blank" rel="noopener noreferrer">
         <img src="Slide2.JPG" alt="Slide 2" />
-      </div>
+      </a>
+    </div>
 
-      <div class="mySlides fade">
+    <!-- SLIDE 3 -->
+    <div class="mySlides fade">
+      <a href="https://www.french4me.net" target="_blank" rel="noopener noreferrer">
         <img src="Slide3.JPG" alt="Slide 3" />
-      </div>
+      </a>
+    </div>
 
-      <div class="mySlides fade">
+    <!-- SLIDE 4 -->
+    <div class="mySlides fade">
+      <a href="https://www.french4me.net" target="_blank" rel="noopener noreferrer">
         <img src="Slide4.JPG" alt="Slide 4" />
-      </div>
-
-      <!-- Arrows -->
-      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      </a>
     </div>
 
-    <!-- Dots -->
-    <div class="dots-container">
-      <span class="dot" onclick="currentSlide(1)"></span>
-      <span class="dot" onclick="currentSlide(2)"></span>
-      <span class="dot" onclick="currentSlide(3)"></span>
-      <span class="dot" onclick="currentSlide(4)"></span>
-    </div>
+    <!-- Arrows -->
+    <a class="prev" onclick="manualPlusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="manualPlusSlides(1)">&#10095;</a>
+  </div>
+
+  <!-- Dots -->
+  <div class="dots-container">
+    <span class="dot" onclick="manualCurrentSlide(1)"></span>
+    <span class="dot" onclick="manualCurrentSlide(2)"></span>
+    <span class="dot" onclick="manualCurrentSlide(3)"></span>
+    <span class="dot" onclick="manualCurrentSlide(4)"></span>
   </div>
 
   <script>
     let slideIndex = 1;
-    showSlides(slideIndex);
+    const AUTO_PLAY_INTERVAL = 5000;
+    let autoPlayTimer = null;
 
-    // Next/previous controls
+    function initSlideshow() {
+      showSlides(slideIndex);
+      startAutoPlay();
+    }
+
+    function startAutoPlay() {
+      stopAutoPlay();
+      autoPlayTimer = setInterval(function () {
+        plusSlides(1);
+      }, AUTO_PLAY_INTERVAL);
+    }
+
+    function stopAutoPlay() {
+      if (autoPlayTimer !== null) {
+        clearInterval(autoPlayTimer);
+        autoPlayTimer = null;
+      }
+    }
+
+    function resetAutoPlay() {
+      stopAutoPlay();
+      startAutoPlay();
+    }
+
     function plusSlides(n) {
       showSlides((slideIndex += n));
     }
 
-    // Thumbnail image controls
+    function manualPlusSlides(n) {
+      plusSlides(n);
+      resetAutoPlay();
+    }
+
+    function manualCurrentSlide(n) {
+      currentSlide(n);
+      resetAutoPlay();
+    }
+
     function currentSlide(n) {
       showSlides((slideIndex = n));
     }
@@ -191,6 +232,9 @@
       slides[slideIndex - 1].style.display = "block";
       dots[slideIndex - 1].className += " active";
     }
+
+    window.addEventListener("load", initSlideshow);
   </script>
+
 </body>
 </html>
