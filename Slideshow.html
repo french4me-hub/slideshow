@@ -1,138 +1,196 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Slideshow</title>
-  <style>
-    * { box-sizing: border-box; }
-    body { margin: 0; background: #000; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>French4Me – Slideshow</title>
 
-    .slideshow-container {
-      max-width: 100%;
-      width: 100%;
-      height: auto;
-      margin: auto;
-      position: relative;
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    .mySlides { display: none; }
+    body {
+      margin: 0;
+      background: #000;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+    }
 
-    img {
+    /* Wrapper so it looks good even if the iframe is very wide */
+    .wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .slideshow-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .mySlides {
+      display: none;
+      width: 100%;
+    }
+
+    .mySlides img {
       width: 100%;
       height: auto;
       display: block;
     }
 
-    .prev, .next {
+    /* Arrows */
+    .prev,
+    .next {
       cursor: pointer;
       position: absolute;
       top: 50%;
-      padding: 16px;
-      color: white;
-      font-weight: bold;
-      font-size: 18px;
-      user-select: none;
-      background: rgba(0,0,0,0.3);
-      border-radius: 3px;
       transform: translateY(-50%);
+      padding: 12px 16px;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.4);
+      color: #fff;
+      font-weight: bold;
+      font-size: 22px;
+      user-select: none;
     }
 
-    .next { right: 0; }
+    .prev {
+      left: 10px;
+    }
+
+    .next {
+      right: 10px;
+    }
+
+    .prev:hover,
+    .next:hover {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    /* Dots */
+    .dots-container {
+      text-align: center;
+      padding: 10px 0 16px;
+    }
 
     .dot {
       cursor: pointer;
-      height: 15px;
-      width: 15px;
-      margin: 5px 3px;
-      background-color: #bbb;
+      height: 10px;
+      width: 10px;
+      margin: 0 4px;
+      background-color: #777;
       border-radius: 50%;
       display: inline-block;
+      transition: background-color 0.3s ease, transform 0.3s ease;
     }
 
-    .active, .dot:hover {
-      background-color: #717171;
+    .dot.active,
+    .dot:hover {
+      background-color: #fff;
+      transform: scale(1.2);
     }
 
+    /* Fade animation */
     .fade {
       animation-name: fade;
-      animation-duration: 1.5s;
+      animation-duration: 0.8s;
     }
 
     @keyframes fade {
-      from { opacity: .4; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
     }
 
-    .dots-container {
-      text-align: center;
-      margin-top: 10px;
+    /* Mobile tweaks */
+    @media (max-width: 600px) {
+      .prev,
+      .next {
+        font-size: 18px;
+        padding: 8px 10px;
+      }
     }
   </style>
 </head>
 
 <body>
+  <div class="wrapper">
+    <div class="slideshow-container">
+      <div class="mySlides fade">
+        <img src="Slide1.JPG" alt="Slide 1" />
+      </div>
 
-<div class="slideshow-container">
+      <div class="mySlides fade">
+        <img src="Slide2.JPG" alt="Slide 2" />
+      </div>
 
-  <div class="mySlides fade">
-    <img src="Slide1.JPG">
+      <div class="mySlides fade">
+        <img src="Slide3.JPG" alt="Slide 3" />
+      </div>
+
+      <div class="mySlides fade">
+        <img src="Slide4.JPG" alt="Slide 4" />
+      </div>
+
+      <!-- Arrows -->
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+
+    <!-- Dots -->
+    <div class="dots-container">
+      <span class="dot" onclick="currentSlide(1)"></span>
+      <span class="dot" onclick="currentSlide(2)"></span>
+      <span class="dot" onclick="currentSlide(3)"></span>
+      <span class="dot" onclick="currentSlide(4)"></span>
+    </div>
   </div>
 
-  <div class="mySlides fade">
-    <img src="Slide2.JPG">
-  </div>
+  <script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
 
-  <div class="mySlides fade">
-    <img src="Slide3.JPG">
-  </div>
+    // Next/previous controls
+    function plusSlides(n) {
+      showSlides((slideIndex += n));
+    }
 
-  <div class="mySlides fade">
-    <img src="Slide4.JPG">
-  </div>
+    // Thumbnail image controls
+    function currentSlide(n) {
+      showSlides((slideIndex = n));
+    }
 
-  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-  <a class="next" onclick="plusSlides(1)">&#10095;</a>
-</div>
+    function showSlides(n) {
+      let i;
+      const slides = document.getElementsByClassName("mySlides");
+      const dots = document.getElementsByClassName("dot");
 
-<div class="dots-container">
-  <span class="dot" onclick="currentSlide(1)"></span>
-  <span class="dot" onclick="currentSlide(2)"></span>
-  <span class="dot" onclick="currentSlide(3)"></span>
-  <span class="dot" onclick="currentSlide(4)"></span>
-</div>
+      if (n > slides.length) {
+        slideIndex = 1;
+      }
+      if (n < 1) {
+        slideIndex = slides.length;
+      }
 
-<script>
-let slideIndex = 1;
-showSlides(slideIndex);
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
 
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
 
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
-  let i;
-  const slides = document.getElementsByClassName("mySlides");
-  const dots = document.getElementsByClassName("dot");
-
-  if (n > slides.length) { slideIndex = 1; }
-  if (n < 1) { slideIndex = slides.length; }
-
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-
-  slides[slideIndex - 1].style.display = "block";
-  dots[slideIndex - 1].className += " active";
-}
-</script>
-
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1].className += " active";
+    }
+  </script>
 </body>
 </html>
